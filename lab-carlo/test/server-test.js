@@ -5,6 +5,7 @@ const cowsay = require('cowsay');
 const chai = require('chai');
 const http = require('chai-http');
 const expect = chai.expect;
+chai.use(http);
 
 describe('Server module', function(){
   before(done => {
@@ -20,15 +21,20 @@ describe('Server module', function(){
         .send({})
         .end(function(res){
           expect(res.status).to.equal(400);
+          done();
         });
-        done();
       });
     });
     describe('GET method', function(){
       describe('/ endpoint', function(){
         it('should respond with a 400 on bad request', done => {
-
-          done();
+          chai.request(server)
+          .get('/monkeysay')
+          .send({})
+          .end(function(res){
+            expect(res.status).to.equal(400);
+            done();
+          });
         });
       });
     });
