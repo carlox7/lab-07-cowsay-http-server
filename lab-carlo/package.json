@@ -1,0 +1,28 @@
+{
+  "name": "lab-carlo",
+  "version": "1.0.0",
+  "description": "class 7 lab",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha chai",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "debug": "DEBUG=cowsay* nodemon server.js"
+  },
+  "keywords": [
+    "cowsay"
+  ],
+  "author": "Carlo",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "cowsay": "^1.1.9"
+  }
+}
