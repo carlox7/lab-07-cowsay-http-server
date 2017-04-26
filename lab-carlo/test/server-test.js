@@ -26,13 +26,13 @@ describe('Server module', function(){
       });
     });
     describe('GET method', function(){
-      describe('/ endpoint', function(){
-        it('should respond with a 400 on bad request', done => {
+      describe('/', function(){
+        it('should respond with a 200 on request', done => {
           chai.request(server)
-          .get('/monkeysay')
-          .send({})
+          .get('/')
+          
           .end(function(res){
-            expect(res.status).to.equal(400);
+            expect(res.status).to.equal(200);
             done();
           });
         });
