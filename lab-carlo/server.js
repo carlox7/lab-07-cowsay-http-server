@@ -19,7 +19,7 @@ const server = module.exports = http.createServer(function(req, res) {
         let message = cowsay.say({text: req.body.text});
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(message);
-        res.end(); //this will not be at the end of POST and GET
+        res.end();
       });
     } else {
       let message = cowsay.say({text: 'bad request entry: localhost:3000/cowsay?text=howdy'});
@@ -27,35 +27,49 @@ const server = module.exports = http.createServer(function(req, res) {
       res.write(message);
       res.end();
     }
+    if(req.url.pathname === '/') {
+      let message = cowsay.say({text: 'hello'});
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write(message);
+      res.end();
+    }
   }
-  // NOTE: below is a cURL command that can be run from the terminal when your server is running
-  // curl -H "Content-Type: application/json" -X POST -d '{"text": "moo!"}' http://localhost:3000/cowsay
 
-  // curl (primary command)
-  // -H "Content-Type: application/json" (sets the headers)
-  // -X POST (sets the POST method)
-  // -d {"text": "moo!"} (sets the req.body data)
-  // http://localhost:3000/cowsay (url for the request)
 
   if(req.method === 'GET') {
 
     if(req.url.pathname === '/cowsay') {
-      let queryMessage = queryString.parse('text=What does a cow like to do on the weekend? Go see a Moo-vie');
-      //let queryText = cowsay.say({text: queryMessage.text});
-      if(!queryMessage) {
+
+      if(!req.url.query.text) {
         let message = cowsay.say({text: 'bad request entry: localhost:3000/cowsay?text=howdy'});
         res.writeHead(400, {'Content-Type': 'text/plain'});
         res.write(message);
         res.end();
       }
 
-      let message = cowsay.say({text: queryMessage.text});
+      let message = cowsay.say({text: req.url.query.text});
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write(message);
       res.end();
 
     }
+    if(req.url.pathname === '/') {
+      let message = cowsay.say({text: 'hello'});
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write(message);
+      res.end();
+    }
   }
+
 });
 
 server.listen(PORT, () => console.log(`listening on port, ${PORT}`));
+
+// NOTE: below is a cURL command that can be run from the terminal when your server is running
+// curl -H "Content-Type: application/json" -X POST -d '{"text": "moo!"}' http://localhost:3000/cowsay
+
+// curl (primary command)
+// -H "Content-Type: application/json" (sets the headers)
+// -X POST (sets the POST method)
+// -d {"text": "moo!"} (sets the req.body data)
+// http://localhost:3000/cowsay (url for the request)
